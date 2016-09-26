@@ -16,9 +16,16 @@ application/models/*
 application/third_party/*
 application/views/*
 !application/views/welcome_message.php
+application/index.html
+application/.htaccess
 
+system/core/*
+system/database/*
+system/fonts/*
+system/helpers/*
 !system/helpers/gettext_helper.php
-!system/language/*
+system/libraries/*
 !system/libraries/Gettext.php
 !system/vendor/*
-system/*
+system/index.html
+system/.htaccess
