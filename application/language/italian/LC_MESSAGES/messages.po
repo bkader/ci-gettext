@@ -1,0 +1,45 @@
+# CODEIGNITER GETTEXT FILES.
+# Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+# This file is distributed under the same license as the PACKAGE package.
+# EllisLab Dev Team <https://codeigniter.com>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: CodeIgniter\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-02-02 23:00+0100\n"
+"PO-Revision-Date: 2016-09-26 03:15+0100\n"
+"Last-Translator: Kader Bouyakoub <bkader@mail.com>\n"
+"Language-Team: Kader Bouyakoub <bkader@mail.com>\n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Eazy Po 0.9.5.3\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: _;__;_n;_d\n"
+
+msgid "Welcome to CodeIgniter"
+msgstr "Benvenuti a CodeIgniter"
+
+msgid "The page you are looking at is being generated dynamically by CodeIgniter."
+msgstr "La pagina che state guardando è generato dinamicamente da CodeIgniter."
+
+msgid "If you would like to edit this page you'll find it located at:"
+msgstr "Se si desidera modificare questa pagina troverete all'indirizzo:"
+
+msgid "The corresponding controller for this page is found at:"
+msgstr "L'unità di controllo corrispondente per questa pagina è disponibile all'indirizzo:"
+
+msgid ""
+"If you are exploring CodeIgniter for the very first time, you should start by reading the"
+msgstr ""
+"Se si stanno esplorando CodeIgniter per la prima volta, si dovrebbe iniziare con la "
+"lettura del"
+
+msgid "User Guide"
+msgstr "Guida Utente"
+
+msgid "Page rendered in"
+msgstr "Pagina visualizzata in"

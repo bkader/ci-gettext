@@ -2,10 +2,20 @@
 ## causing any issue to yours
 ## cache files
 
+application/cache/*
+application/config/*
 !application/config/gettext.php
+application/controllers/*
+application/core/*
+application/helpers/*
+application/hooks/*
 !application/language/*
+application/libraries/*
+application/logs/*
+application/models/*
+application/third_party/*
+application/views/*
 !application/views/welcome_message.php
-application/*
 
 !system/helpers/gettext_helper.php
 !system/language/*
