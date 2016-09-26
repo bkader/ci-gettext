@@ -1,0 +1,18 @@
+## all codeigniter files are ignored to avoid
+## causing any issue to yours
+## cache files
+
+application/*
+!application/config/gettext.php
+!application/language/*
+!application/views/welcome_message.php
+
+system/*
+!system/helpers/gettext_helper.php
+!system/language/*
+!system/libraries/Gettext.php
+!system/vendor/*
+
+## log files
+application/logs/*
+!application/logs/index.html
