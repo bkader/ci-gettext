@@ -50,6 +50,11 @@ class CI_Gettext
 
 		// initialize class
 		$this->initialize($config);
+
+        // Load gettext helper
+        $this->CI->load->helper('gettext');
+
+        log_message('debug', 'Gettext Class Initialized');
 	}
 
 	/**
@@ -138,6 +143,16 @@ class CI_Gettext
         }
         else
         {
+        	// Normally this should work, but I tried a lot on my machine
+        	// (win8.1 x64 - xampp), php_gettext did not work while the
+        	// php-gettext library worked like charm.
+        	// If you encounter the same issue, make sure you disable
+        	// php_gettext extension and use functions we included in our
+        	// helper!
+        	// If you are familiar with gettext(),php-gettext library
+        	// lets you use the same functions with 'underscore' at first
+        	// gettext() => _gettext() - __() is an alias
+        	// ngettext() => _ngettext() ... etc
         	putenv('LANG='.$this->current['folder']);
         	setlocale(LC_MESSAGES, $this->current['folder']);
         	bindtextdomain($this->domain, APPPATH."language");
@@ -145,10 +160,8 @@ class CI_Gettext
             textdomain($this->domain);
         }
 
-        // Load gettext helper
-        $this->CI->load->helper('gettext');
-
-        log_message('debug', 'Gettext Class Initialized');
+        // Change language in config file
+        $this->CI->config->set_item('language', $this->current['folder']);
 	}
 
 	// ------------------------------------------------------------------------
@@ -235,6 +248,7 @@ class CI_Gettext
 	protected function _set_current_language()
 	{
 		$_lang = NULL;
+
 
 		// If the use of COOKIES is enabled, we check the cookie
 		if ($this->cookie !== NULL)
@@ -329,16 +343,14 @@ class CI_Gettext
 		{
 			// If the use of cookies is ON
 			if ($this->cookie !== NULL)
-				set_cookie($this->cookie, $lang['folder']);
+				set_cookie($this->cookie, $lang['folder'], 2678400);
 
 			// In case COOKIE are off but SESSION is on
 			elseif ($this->session !== NULL)
 				$_SESSION[$this->session] = $lang['folder'];
 
-			// If neither cookie nor session are on
-			// we simply change the current language.
-			else
-				$this->current = $lang;
+			// Change now current language
+			$this->current = $lang;
 
 			return TRUE;
 		}

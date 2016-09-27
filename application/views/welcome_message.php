@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?><!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo current_lang('code'); ?>">
 <head>
 	<meta charset="utf-8">
 	<title><?php e_line('Welcome to CodeIgniter'); ?></title>
@@ -65,7 +65,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	}
 	</style>
 </head>
-<body>
+<body dir="<?php echo current_lang('direction'); ?>">
 
 <div id="container">
 	<h1><?php e_line('Welcome to CodeIgniter'); ?>!</h1>
@@ -82,7 +82,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<p><?php e_line("If you are exploring CodeIgniter for the very first time, you should start by reading the"); ?> <a href="http://www.codeigniter.com/user_guide/" target="_blank"><?php e_line("User Guide"); ?></a>.</p>
 	</div>
 
-	<p class="footer"><?php e_line("Page rendered in"); ?> <strong>{elapsed_time}</strong> <?php e_line("Seconds"); ?>. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>
+	<p class="footer"><?php e_line("Page rendered in"); ?> <strong>{elapsed_time}</strong> <?php e_line("Seconds"); ?>. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>'.CI_VERSION.'</strong>' : '' ?> &#124; <?php foreach (languages() as $key => $lang) { if ($key <> current_lang('folder')) { echo '<a href="index.php/process/lang/'.$lang['code'].'">'.$lang['name'].'</a> &bull; '; } } ?></p>
 </div>
 
 </body>

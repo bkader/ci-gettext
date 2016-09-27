@@ -11,4 +11,4 @@ CodeIgniter using [Gettext](http://php.net/manual/en/book.gettext.php) if *php_g
 
 ## Licenses
 
-All licenses go to their respective owners ([CodeIgniter](http://www.codeigniter.com/) & [Launchpad](https://launchpad.net/php-gettext/)).
+All credits go to their respective owners ([CodeIgniter](http://www.codeigniter.com/) & [Launchpad](https://launchpad.net/php-gettext/)).

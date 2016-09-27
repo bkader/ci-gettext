@@ -79,29 +79,32 @@ $config['available_languages'] = array(
 
 	// English
 	'english' => array(
-		'name'    => 'English',
-		'name_en' => 'English',
-		'folder'  => 'english',
-		'code'    => 'en',
-		'flag'    => 'us',
+		'name'      => 'English',
+		'name_en'   => 'English',
+		'folder'    => 'english',
+		'direction' => 'ltr',
+		'code'      => 'en',
+		'flag'      => 'us',
 	),
 
 	// French
 	'french' => array(
-		'name'    => 'Français',
-		'name_en' => 'French',
-		'folder'  => 'french',
-		'code'    => 'fr',
-		'flag'    => 'fr',
+		'name'      => 'Français',
+		'name_en'   => 'French',
+		'folder'    => 'french',
+		'direction' => 'ltr',
+		'code'      => 'fr',
+		'flag'      => 'fr',
 	),
 
 	// Arabic
 	'arabic' => array(
-		'name'    => 'العؤبية',
-		'name_en' => 'Arabic',
-		'folder'  => 'arabic',
-		'code'    => 'ar',
-		'flag'    => 'dz',
+		'name'      => 'العربية',
+		'name_en'   => 'Arabic',
+		'folder'    => 'arabic',
+		'direction' => 'rtl',
+		'code'      => 'ar',
+		'flag'      => 'dz',
 	),
 );
 

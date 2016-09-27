@@ -16,6 +16,41 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // 	}
 // }
 
+if ( ! function_exists('current_lang'))
+{
+	/**
+	 * Returns current used language
+	 * @param 	string 	$key 	key to return
+	 * @return 	mixed
+	 */
+	function current_lang($key = NULL)
+	{
+		$CI =& get_instance();
+		class_exists('CI_Gettext') OR $CI->load->library('gettext');
+		return $CI->gettext->get_current($key);
+	}
+}
+
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('languages'))
+{
+	/**
+	 * Returns an array of available languages
+	 * @param 	string 	$lang 	a single language to return
+	 * @param 	string 	$key 	a single key to return
+	 * @return 	mixed
+	 */
+	function languages($lang = NULL, $key = NULL)
+	{
+		$CI =& get_instance();
+		class_exists('CI_Gettext') OR $CI->load->library('gettext');
+		return $CI->gettext->languages($lang, $key);
+	}
+}
+
+// ------------------------------------------------------------------------
+
 if ( ! function_exists('line'))
 {
 	/**

@@ -6,6 +6,7 @@ application/cache/*
 application/config/*
 !application/config/gettext.php
 application/controllers/*
+!application/controllers/Process.php
 application/core/*
 application/helpers/*
 application/hooks/*
