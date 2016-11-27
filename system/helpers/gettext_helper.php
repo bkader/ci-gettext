@@ -8,14 +8,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link 	http://www.bkader.com/
  */
 
-// if ( ! function_exists('gettext'))
-// {
-// 	function gettext($msgid)
-// 	{
-// 		return _gettext($msgid);
-// 	}
-// }
-
 if ( ! function_exists('current_lang'))
 {
 	/**
@@ -119,9 +111,12 @@ if ( ! function_exists('nline'))
 			}
 		}
 
-		return (function_exists('_ngettext')) 
+		$line = (function_exists('_ngettext'))
 				? _ngettext($singular, $plural, $number) 
 				: ngettext($singular, $plural, $number);
+
+		return sprintf($line, (int) $number);
+
 	}
 }
 
