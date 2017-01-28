@@ -90,34 +90,38 @@ class CI_Gettext
 				'gettext_languages'   => array('english'),
 				'available_languages' => array(
 					'english' => array(
-						'name'    => 'English',
-						'name_en' => 'English',
-						'folder'  => 'english',
-						'code'    => 'en',
-						'flag'    => 'us',
+						'name'      => 'English',
+						'name_en'   => 'English',
+						'folder'	=> 'english',
+						'locale'    => 'en-US',
+						'direction' => 'ltr',
+						'code'      => 'en',
+						'flag'      => 'us',
 					),
 				),
 			);
 		}
 
-		// If gettext_enabled is set to FALSE, we return;
-		if ( ! $config['gettext_enabled']) return;
+		// We stop the library if gettext is disable and no cookie
+		// or session names are provided.
+		if ( ! $config['gettext_enabled'] 
+			OR empty($config['gettext_cookie']) 
+			&& empty($config['gettext_session']))
+		{
+			return;
+		}
 
 		// We check whether the cookie use is enabled or not
 		isset($config['gettext_cookie']) OR $config['gettext_cookie'] = 'lang';
-		if ($config['gettext_cookie'] !== NULL)
-		{
-			function_exists('get_cookie') OR $this->CI->load->helper('cookie');
-			$this->cookie = $config['gettext_cookie'];
-		}
+		$this->cookie = $config['gettext_cookie'];
 
 		// If we are using session as well, we make sure session library
 		// is loaded.
 		isset($config['gettext_session']) OR $config['gettext_session'] = NULL;
-		if ($config['gettext_session'] !== NULL)
+		$this->session = $config['gettext_session'];
+		if ($this->session !== NULL)
 		{
 			class_exists('CI_Session') OR $this->CI->load->library('session');
-			$this->session = $config['gettext_session'];
 		}
 
 		// Make sure available language is never empty
@@ -128,14 +132,16 @@ class CI_Gettext
 
 		foreach ($config['gettext_languages'] as $lang)
 		{
-			if (array_key_exists($lang, $config['available_languages']))
+			if (isset($config['available_languages'][$lang]))
 			{
 				$this->languages[$lang] = $config['available_languages'][$lang];
 			}
 		}
 
 		// Now we set site default language
-		isset($config['gettext_default']) OR $config['gettext_default'] = config_item('language');
+		if ( ! isset($config['get_default']) OR empty($config['gettext_default'])) {
+			$config['gettext_default'] = $this->CI->config->item('language');
+		}
 		$this->default = $this->languages[$config['gettext_default']];
 
 		// Set our client language now
@@ -170,18 +176,42 @@ class CI_Gettext
 	 * @param 	string 	$key 	key to return
 	 * @return 	mixed
 	 */
-	public function languages($lang = NULL, $key = NULL)
+	public function languages()
 	{
-		$return = $this->languages;
-		if ($lang !== NULL && array_key_exists($lang, $return))
-		{
-			$return = $return[$lang];
 
-			if ($key !== NULL && array_key_exists($key, $return))
-				$return = $return[$key];
-		}
+        // We prepare our array of languages codes
+        $languages = $this->languages;
 
-		return $return;
+        // If any arguments are passed to this method
+        if ( ! empty($args = func_get_args())) {
+
+
+            // Prepare an empty array and fill it after
+            $_languages = array();
+
+            // Make sure $args is not a multidimensional array
+            isset($args[0]) && is_array($args[0]) && $args = $args[0];
+
+            // We walk through languages codes and fill our array
+            foreach ($languages as $key => $value) {
+                
+                // We start by assigning the key with an empty value
+                $_languages[$key] = array();
+                // We walk through passed arguments
+                foreach ($args as $arg) {
+
+                	if (isset($value[$arg])) {
+                		$_languages[$key][$arg] = $value[$arg];
+                	}
+                }
+            }
+
+            // replace our $languages array with $_languages
+            $languages  = $_languages;
+            unset($_languages);
+        }
+
+        return $languages;
 	}
 
 	// ------------------------------------------------------------------------
@@ -189,16 +219,28 @@ class CI_Gettext
 	/**
 	 * Returns site default language default
 	 * @access 	public
-	 * @param 	string 	$key 	key to return
+	 * @param 	mixed 	string, strings or array
 	 * @return 	string
 	 */
-	public function get_default($key = NULL)
+	public function get_default()
 	{
 		$return = $this->default;
 
-		if ($key !== NULL && array_key_exists($key, $return))
-			$return = $return[$key];
+		if (count($args = func_get_args()) >= 1) 
+		{
+			isset($args[0]) && is_array($args[0]) && $args = $args[0];
+			$_return = array();
+			foreach ($args as $arg)
+			{
+				if (isset($return[$arg]))
+				{
+					$_return[$arg] = $return[$arg];
+				}
+			}
 
+			empty($_return) OR $return = $_return;
+			unset($_return);
+		}
 		return $return;
 	}
 
@@ -221,16 +263,28 @@ class CI_Gettext
 	/**
 	 * Returns client's language details
 	 * @access 	public
-	 * @param 	string 	$key 	key to return
+	 * @param 	mixed 	string, strings or array
 	 * @return 	string
 	 */
-	public function get_client($key = NULL)
+	public function get_client()
 	{
 		$return = $this->client;
-		
-		if ($key !== NULL && array_key_exists($key, $return))
-			$return = $return[$key];
 
+		if (count($args = func_get_args()) >= 1) 
+		{
+			isset($args[0]) && is_array($args[0]) && $args = $args[0];
+			$_return = array();
+			foreach ($args as $arg)
+			{
+				if (isset($return[$arg]))
+				{
+					$_return[$arg] = $return[$arg];
+				}
+			}
+
+			empty($_return) OR $return = $_return;
+			unset($_return);
+		}
 		return $return;
 	}
 
@@ -244,35 +298,35 @@ class CI_Gettext
 	 */
 	protected function _set_current_language()
 	{
-		$_lang = NULL;
+		$folder = NULL;
 
 
 		// If the use of COOKIES is enabled, we check the cookie
-		if ($this->cookie !== NULL)
+		if ($cookie = $this->CI->input->cookie($this->cookie, TRUE))
 		{
-			$_lang = get_cookie($this->cookie, TRUE);
-			$_lang OR $_lang = $this->get_client('folder');
+			$folder = $cookie;
+			unset($cookie);
 		}
 
 		// In case we use SESSION instead of COOKIE
-		elseif($this->session !== NULL)
+		elseif ($this->session !== NULL)
 		{
-			$_lang = $this->CI->session->{$this->session};
-			$_lang OR $_lang = $this->get_client('folder');
+			$folder = $this->CI->session->{$this->session};
+			$folder OR $folder = $this->client['folder'];
 		}
 
 		// If neither COOKIE nor SESSION are used, we use
 		// default language
 		else
 		{
-			$_lang = $this->default['folder'];
+			$folder = $this->client['folder'];
 		}
 
 		// We prepare our default language
 		$current = $this->default;
 
 		// We make sure the language is available
-		if ($lang = $this->find_by('folder', $_lang))
+		if ($lang = $this->find_by('folder', $folder))
 		{
 			$current = $lang;
 			unset($lang);
@@ -280,11 +334,15 @@ class CI_Gettext
 
 		// We set COOKIE if enabled
 		if ($this->cookie !== NULL)
-			set_cookie($this->cookie, $current['folder'], 2678400);
+		{
+			$this->CI->input->set_cookie($this->cookie, $current['folder'], 2678400);
+		}
 
 		// If no cookie but session is ON
-		elseif($this->session !== NULL)
+		elseif ($this->session !== NULL)
+		{
 			$_SESSION[$this->session] = $current['folder'];
+		}
 
 		return $current;
 	}
@@ -292,16 +350,28 @@ class CI_Gettext
 	/**
 	 * Returns current language's details
 	 * @access 	public
-	 * @param 	string 	$key 	key to return
+	 * @param 	none 	string, array of multiple strings
 	 * @return 	string
 	 */
-	public function get_current($key = NULL)
+	public function get_current()
 	{
 		$return = $this->current;
 
-		if ($key !== NULL && array_key_exists($key, $return))
-			$return = $return[$key];
+		if (count($args = func_get_args()) >= 1) 
+		{
+			isset($args[0]) && is_array($args[0]) && $args = $args[0];
+			$_return = array();
+			foreach ($args as $arg)
+			{
+				if (isset($return[$arg]))
+				{
+					$_return[$arg] = $return[$arg];
+				}
+			}
 
+			empty($_return) OR $return = $_return;
+			unset($_return);
+		}
 		return $return;
 	}
 
@@ -319,7 +389,9 @@ class CI_Gettext
 		foreach($this->languages as $lang)
 		{
 			if (isset($lang[$field]) && $lang[$field] === $match)
+			{
 				return $lang;
+			}
 		}
 
 		return NULL;
@@ -336,7 +408,8 @@ class CI_Gettext
 	public function change($code = 'en')
 	{
 		// We make sure the language is not the same as the current
-		if ($code === $this->current['code']) {
+		if ($code === $this->current['code'])
+		{
 			return TRUE;
 		}
 
@@ -345,11 +418,15 @@ class CI_Gettext
 		{
 			// If the use of cookies is ON
 			if ($this->cookie !== NULL)
-				set_cookie($this->cookie, $lang['folder'], 2678400);
+			{
+				$this->CI->input->set_cookie($this->cookie, $lang['folder'], 2678400);
+			}
 
 			// In case COOKIE are off but SESSION is on
 			elseif ($this->session !== NULL)
+			{
 				$_SESSION[$this->session] = $lang['folder'];
+			}
 
 			// Change now current language
 			$this->current = $lang;

@@ -64,7 +64,7 @@ $config['gettext_languages'] = array('english', 'french', 'arabic');
 | are enabled, COOKIES are privileged.
 */
 $config['gettext_session'] = NULL;
-$config['gettext_cookie']  = NULL;
+$config['gettext_cookie']  = 'lang';
 
 /*
 | -------------------------------------------------------------------

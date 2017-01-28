@@ -18,8 +18,8 @@ class Process extends CI_Controller
 	 */
 	public function lang($code = 'en')
 	{
+		function_exists('redirect') OR $this->load->helper('url');
 		$this->gettext->change($code);
-		$this->load->helper('url');
 		redirect('');
 	}
 }
