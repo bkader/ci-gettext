@@ -53,8 +53,6 @@ if ( ! function_exists('client_language')) {
 	}
 }
 
-// ------------------------------------------------------------------------
-
 if ( ! function_exists('languages')) {
 	/**
 	 * Returns an array of available languages
@@ -175,6 +173,94 @@ if ( ! function_exists('e_nline')) {
 	function e_nline($singular, $plural, $number, $domain = NULL)
 	{
 		echo nline($singular, $plural, $number, $domain);
+	}
+}
+
+// ------------------------------------------------------------------------
+// Declaring gettext functions if the extension is not loaded or available
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('gettext')) {
+	function gettext($msgid)
+	{
+		return T_gettext($msgid);
+	}
+}
+
+if ( ! function_exists('ngettext')) {
+	function ngettext($singular, $plural, $number)
+	{
+		return T_ngettext($singular, $plural, $number);
+	}
+}
+
+if ( ! function_exists('dgettext')) {
+	function dgettext($domain, $msgid)
+	{
+		return T_dgettext($domain, $msgid);
+	}
+}
+
+if ( ! function_exists('dngettext')) {
+	function dngettext($domain, $singular, $plural, $number)
+	{
+		return T_dngettext($domain, $singular, $plural, $number);
+	}
+}
+
+if ( ! function_exists('dcgettext')) {
+	function dcgettext($domain, $msgid, $category)
+	{
+		return T_dcgettext($domain, $msgid, $category);
+	}
+}
+
+if ( ! function_exists('dcngettext')) {
+	function dcngettext($domain, $singular, $plural, $number, $category)
+	{
+		return T_dcnpgettext($domain, $singular, $plural, $number, $category);
+	}
+}
+
+if ( ! function_exists('pgettext')) {
+	function pgettext($context, $msgid)
+	{
+		return T_pgettext($context, $msgid);
+	}
+}
+
+if ( ! function_exists('dpgettext')) {
+	function dpgettext($domain, $context, $msgid)
+	{
+		return T_dpgettext($domain, $context, $msgid);
+	}
+}
+
+if ( ! function_exists('dcpgettext')) {
+	function dcpgettext($domain, $context, $msgid, $category)
+	{
+		return T_dcpgettext($domain, $context, $msgid, $category);
+	}
+}
+
+if ( ! function_exists('npgettext')) {
+	function npgettext($context, $singular, $plural)
+	{
+		return T_npgettext($context, $singular, $plural);
+	}
+}
+
+if ( ! function_exists('dnpgettext')) {
+	function dnpgettext($domain, $context, $singular, $plural)
+	{
+		return T_dnpgettext($domain, $context, $singular, $plural);
+	}
+}
+
+if ( ! function_exists('dcnpgettext')) {
+	function dcnpgettext($domain, $context, $singular, $plural, $category)
+	{
+		return T_dcnpgettext($domain, $context, $singular, $plural, $category);
 	}
 }
 

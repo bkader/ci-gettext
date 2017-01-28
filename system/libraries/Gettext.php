@@ -1,6 +1,21 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Gettext Library
+ *
+ * This library allows the use of php_gettext extension to make your CodeIgniter
+ * applications multilingual.
+ * The good thing about it is that you can use php_gettext functions even if the
+ * extension is not enabled and that thanks Launcphad's php-gettext library added
+ * add-in (BASEPATH/vendor/php-gettext).
+ *
+ * @package 	CodeIgniter
+ * @category 	Libraries
+ * @author 	Kader Bouyakoub <bkader@mail.com>
+ * @link 	http://github.com/bkader
+ */
+
 class CI_Gettext
 {
 	/**
@@ -320,6 +335,11 @@ class CI_Gettext
 	 */
 	public function change($code = 'en')
 	{
+		// We make sure the language is not the same as the current
+		if ($code === $this->current['code']) {
+			return TRUE;
+		}
+
 		// We make sure the language exists
 		if ($lang = $this->find_by('code', $code))
 		{
