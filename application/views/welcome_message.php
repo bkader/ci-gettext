@@ -1,10 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?><!DOCTYPE html>
-<html lang="<?php echo current_lang('code'); ?>">
+<html lang="<?php echo $language['code']; ?>">
 <head>
 	<meta charset="utf-8">
-	<title><?php e_line('Welcome to CodeIgniter'); ?></title>
+	<title><?php _e('Welcome to CodeIgniter'); ?></title>
 
 	<style type="text/css">
 
@@ -65,24 +65,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	}
 	</style>
 </head>
-<body dir="<?php echo current_lang('direction'); ?>">
+<body dir="<?php echo $language['direction']; ?>">
 
 <div id="container">
-	<h1><?php e_line('Welcome to CodeIgniter'); ?>!</h1>
+	<h1><?php _e('Welcome to CodeIgniter'); ?>!</h1>
 
 	<div id="body">
-		<p><?php e_line("The page you are looking at is being generated dynamically by CodeIgniter."); ?></p>
+		<p><?php _e("The page you are looking at is being generated dynamically by CodeIgniter."); ?></p>
 
-		<p><?php e_line("If you would like to edit this page you'll find it located at:"); ?></p>
+		<p><?php _e("If you would like to edit this page you'll find it located at:"); ?></p>
 		<code>application/views/welcome_message.php</code>
 
-		<p><?php e_line("The corresponding controller for this page is found at:"); ?></p>
+		<p><?php _e("The corresponding controller for this page is found at:"); ?></p>
 		<code>application/controllers/Welcome.php</code>
 
-		<p><?php e_line("If you are exploring CodeIgniter for the very first time, you should start by reading the"); ?> <a href="http://www.codeigniter.com/user_guide/" target="_blank"><?php e_line("User Guide"); ?></a>.</p>
+		<p><?php _e("If you are exploring CodeIgniter for the very first time, you should start by reading the"); ?> <a href="http://www.codeigniter.com/user_guide/" target="_blank"><?php _e("User Guide"); ?></a>.</p>
 	</div>
 
-	<p class="footer"><?php e_line("Page rendered in"); ?> <strong>{elapsed_time}</strong> <?php e_line("Seconds"); ?>. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>'.CI_VERSION.'</strong>' : '' ?> &#124; <?php foreach (languages() as $key => $lang) { if ($key <> current_lang('folder')) { echo '<a href="index.php/process/lang/'.$lang['code'].'">'.$lang['name'].'</a> &bull; '; } } ?></p>
+	<p class="footer"><?php _e("Page rendered in"); ?> <strong>{elapsed_time}</strong> <?php _e("Seconds"); ?>. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>'.CI_VERSION.'</strong>' : '' ?> &#124; <?php foreach ($languages as $key => $lang) { if ($key <> $language['folder']) { echo '<a href="index.php/process/lang/'.$lang['code'].'">'.$lang['name'].'</a> &bull; '; } } ?></p>
 </div>
 
 </body>

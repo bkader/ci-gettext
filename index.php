@@ -319,14 +319,8 @@ switch (ENVIRONMENT)
  * If php_gettext extension is not enabled, we include php-gettext library.
  * See: https://launchpad.net/php-gettext/
  */
-function_exists('gettext') OR require BASEPATH.'vendor/php-gettext/gettext.inc';
-
-/**
- * We check if php_gettext extension is enabled. If so, we
- * define LC_MESSAGES constant as it is not available if
- * php_gettext is not enabled.
- */
-function_exists('__') OR (defined('LC_MESSAGES') OR define('LC_MESSAGES', 5));
+defined('LC_MESSAGES') OR define('LC_MESSAGES', 5);
+require_once BASEPATH.'vendor/php-gettext/gettext.inc';
 
 /*
  * --------------------------------------------------------------------

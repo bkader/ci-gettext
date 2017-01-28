@@ -134,31 +134,13 @@ class CI_Gettext
 
 		// If php_gettext extension is enabled, we use the built-in
 		// functions, otherwise, we use php-gettext library.
-        if (function_exists('__'))
-        {
-            T_setlocale(LC_MESSAGES, $this->current['folder']);
-            T_bindtextdomain($this->domain, APPPATH.'language');
-            T_bind_textdomain_codeset($this->domain, 'UTF-8');
-            T_textdomain($this->domain);
-        }
-        else
-        {
-        	// Normally this should work, but I tried a lot on my machine
-        	// (win8.1 x64 - xampp), php_gettext did not work while the
-        	// php-gettext library worked like charm.
-        	// If you encounter the same issue, make sure you disable
-        	// php_gettext extension and use functions we included in our
-        	// helper!
-        	// If you are familiar with gettext(),php-gettext library
-        	// lets you use the same functions with 'underscore' at first
-        	// gettext() => _gettext() - __() is an alias
-        	// ngettext() => _ngettext() ... etc
+        if (function_exists('gettext')) {
         	putenv('LANG='.$this->current['folder']);
-        	setlocale(LC_MESSAGES, $this->current['folder']);
-        	bindtextdomain($this->domain, APPPATH."language");
-            bind_textdomain_codeset($this->domain, 'UTF-8');
-            textdomain($this->domain);
         }
+        T_setlocale(LC_MESSAGES, $this->current['folder']);
+        T_bindtextdomain($this->domain, APPPATH.'language');
+        T_bind_textdomain_codeset($this->domain, 'UTF-8');
+        T_textdomain($this->domain);
 
         // Change language in config file
         $this->CI->config->set_item('language', $this->current['folder']);
