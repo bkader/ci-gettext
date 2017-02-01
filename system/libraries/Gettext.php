@@ -69,8 +69,35 @@ class CI_Gettext
         // Load gettext helper
         $this->CI->load->helper('gettext');
 
-        log_message('debug', 'Gettext Class Initialized');
+        log_message('debug', 'CI_Gettext Class Initialized');
 	}
+
+	// ------------------------------------------------------------------------
+
+	/**
+	 * Magic class setter
+	 * @access 	public
+	 * @param 	string 	$var 	property's name
+	 * @param 	mixed 	$val 	property's value
+	 * @return 	void
+	 */
+	public function __set($var, $val = NULL)
+	{
+		$this->{$var} = $val;
+	}
+
+	/**
+	 * Magic class getter
+	 * @access 	public
+	 * @param 	string 	$var 	property's name
+	 * @return 	void
+	 */
+	public function __get($var)
+	{
+		return isset($this->{$var}) ? $this->{$var} : NULL;
+	}
+
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Initialize Gettext library class
