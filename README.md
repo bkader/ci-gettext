@@ -6,7 +6,7 @@ CodeIgniter using [Gettext](http://php.net/manual/en/book.gettext.php) if *php_g
 1. Copy _./application/config/gettext.php_ files and make your changes
 2. Load Gettext library in _./application/config/autoload.php_.
 3. Create your language files like so: *./application/language/english/LC_MESSAGES/messages.po*
-4. If you have edited _index.php_, make sure to add lines **322** and **323** to yours.
+4. If you have edited _index.php_, make sure to add lines **[322](https://github.com/bkader/ci-gettext/blob/5ddb491ddf829f70787ac12d9397398001332e91/index.php#L322)** and **[323](https://github.com/bkader/ci-gettext/blob/5ddb491ddf829f70787ac12d9397398001332e91/index.php#L323)** to yours.
 5. You're done!
 
 ## Notes
